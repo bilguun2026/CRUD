@@ -1,4 +1,3 @@
-// src/api/todos.ts
 import axios from "axios";
 import { Projects } from "@/utils/types";
 
@@ -15,8 +14,12 @@ export const fetchProject = async (id: string): Promise<Projects> => {
 };
 
 export const createProjects = async (
-  Project: Omit<Projects, "id">
+  project: Omit<Projects, "id" | "createdAt" | "isCompleted">
 ): Promise<Projects> => {
-  const response = await axios.post(`${API_URL}/projects`, Project);
+  const response = await axios.post(`${API_URL}/projects`, project);
   return response.data;
+};
+
+export const deleteProject = async (id: string): Promise<void> => {
+  await axios.delete(`${API_URL}/projects/${id}`);
 };
